@@ -30,13 +30,13 @@
             <div class="container-starf">
                 <h4>Starf sem sótt er um:</h4>
                 <div class="div-forritari">
-                    <input type="radio" name="job" value="forritari"><p>Forritari</p>
+                    <input type="radio" name="job" value="forritari" <% if(job == 'forritari') {%> checked <%}%>><p>Forritari</p>
                 </div>
                 <div class="div-honnudur">
-                    <input type="radio" name="job" value="honnudur"><p>Hönnuður</p>
+                    <input type="radio" name="job" value="honnudur" <% if(job == 'honnudur') {%> checked <%}%>><p>Hönnuður</p>
                 </div>
                 <div class="div-verkefnastjori">
-                    <input type="radio" name="job" value="verkefnastjori"><p>Verkefnastjóri</p>
+                    <input type="radio" name="job" value="verkefnastjori" <% if(job == 'verkefnastjori') {%> checked <%}%>><p>Verkefnastjóri</p>
                 </div>
             </div>
 

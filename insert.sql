@@ -20,7 +20,7 @@ INSERT INTO applications (name, email, phone, text, job, processed)
     'forritari',
     false);
 INSERT INTO applications (name, email, phone, text, job, processed)
-    VALUES ('Guðmunuda Guðmundsdóttir',
+    VALUES ('Guðmunda Guðmundsdóttir',
     'gudmunda@example.org',
     '1111111',
     'Aenean a nibh a enim cursus bibendum. Donec dictum velit in odio feugiat imperdiet. Sed blandit, justo vitae lacinia efficitur, tortor ante ultrices orci, nec placerat dui purus ac augue. Nullam aliquet purus sit amet erat laoreet, nec consequat augue suscipit. Curabitur rutrum pretium erat sed pellentesque. Proin ligula massa, varius id tristique in, varius id elit. Sed congue volutpat fringilla.',

@@ -20,7 +20,7 @@
             <div class="div-info">
                 Sími: <%= application.phone %></div>
             <div class="div-info">
-                    Umsókn send: <%= application.created %></div>
+                    Umsókn send: <%= application.created.toISOString() %></div>
         </div>
         <div class="div-info">
             <%= application.text %></div>
@@ -28,22 +28,22 @@
 
     <div class="div-processed-delete">
         <% if(application.processed == false) { %>
-            <form method="post" action="/applications" enctype="applications/x-www-form-urlencoded">
+            <form method="post" action="/applications/process/<%= application.id %>">
                 <div class="processedbtn">
-                    <button id="<%= application.id %>" type="submit" class="process" value="<%= application.id %>">Vinna umsókn</button>
+                    <button type="submit" value="<%= application.id %>" name="process" class="process">Vinna umsókn</button>
                 </div>
             </form>
         <% } else { %>
-            &#10004; Umsókn unnin <%= application.updated %>
+            &#10004; Umsókn unnin <%= application.updated.toISOString() %>
         <% } %>
-
-        <form method="post" action="/applications" enctype="applications/x-www-form-urlencoded">
+            
+        <form method="post" action="/applications/delete/<%= application.id %>">
             <div class="deletebtn">
-                <button type="submit" class="delete">Eyða umsókn</button>
+                <button type="submit" value="<%= application.id %>" name="delete" class="delete">Eyða umsókn</button>
             </div>
         </form>
     </div>
-
+    
 <% }) %>
    
 </main>

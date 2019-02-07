@@ -17,6 +17,22 @@ async function insert(name, email, phone, text, job, processed) {
       await client.end;
 }
 
+async function runQuery(query) {
+    const client = new Client({ connectionString });
+  
+    await client.connect();
+  
+    try {
+      await client.query(query);
+    } catch (err) {
+      console.error('Error running query');
+      throw err;
+    } finally {
+      await client.end();
+    }
+  }
+
 module.exports = {
     insert,
+    runQuery
 };

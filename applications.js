@@ -1,63 +1,67 @@
 const express = require('express');
-
 const router = express.Router();
-
+const { runQuery } = require('./db');
 const { Client } = require('pg');
-
 const connectionString = process.env.DATABASE_URL; // sótt úr env gegnum dotenv pakka
 
-//router.use(express.urlencoded({ extended: true }));
+// router.use(express.urlencoded({ extended: true }));
 router.use(express.json());
 
 function catchErrors(fn) {
     return (req, res, next) => fn(req, res, next).catch(next);
 }
 
-router.get('/applications', async (req, res) => {
+/*router.get('/applications', async (req, res) => {
     const client = new Client({
         connectionString,
     });
     client.connect();
+    let applications;
     try {
-        const applications = await client.query('SELECT * FROM applications');
-        res.render('applications', { applications: applications.rows });
+        applications = await client.query(`SELECT * FROM applications ORDER BY id`);
       } catch (err) {
         throw(err);
+      } finally {
+          await client.end();
       }
-     await client.end;
+     return applications.rows;
+});*/
+
+async function startFunction(req, res) {
+    const client = new Client({
+        connectionString,
+    });
+    client.connect();
+    let applications;
+    try {
+        applications = await client.query(`SELECT * FROM applications ORDER BY id`);
+    } catch (err) {
+        throw(err);
+    } finally {
+          await client.end();
+    }
+    return applications.rows;
+} 
+startFunction().catch((err) => { console.error(err); });
+
+router.get('/applications', async(req, res) => {
+    const applications = await startFunction();
+    res.render('applications', { title: 'Atvinnuumsóknir', applications: applications });
 });
 
-router.post('/applications', async (req, res) => {
-    const client = new Client({
-        connectionString,
-    });
-    client.connect();
-    try {
-        const { body: { id } = {} } = req;
-        console.log(id);
-        const applications = await client.query('UPDATE applications SET processed = true WHERE id = ($1) RETURNING *', [id]);
-        res.render('applications', { applications: applications.rows });
-      } catch (err) {
-        throw(err);
-      }
-      await client.end;
-});
+async function processFunction(req, res) {
+    const idd = req.params.id;
+    await runQuery(`UPDATE applications SET processed = true, updated = current_timestamp WHERE id = ${idd}`);
+    return res.redirect('/applications');
+}
 
-router.post('/applications', async (req, res) => {
-    const client = new Client({
-        connectionString,
-    });
-    client.connect();
-    try {
-        const { body: { id } = {} } = req;
-        console.log(id);
-        const applications = await client.query('DELETE * FROM applications WHERE ');
-        res.render('applications', { applications: applications.rows });
-      } catch (err) {
-        console.log(err);
-        throw(err);
-      }
-      
-});
+async function deleteFunction(req, res) {
+    const idd = req.params.id;
+    await runQuery(`DELETE FROM applications WHERE id = ${idd}`);
+    return res.redirect('/applications');
+}
+
+router.post('/applications/process/:id', catchErrors(processFunction));
+router.post('/applications/delete/:id', catchErrors(deleteFunction));
 
 module.exports = router;
