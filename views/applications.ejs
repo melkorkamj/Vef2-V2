@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="is">
+<head>
+    <meta charset="utf-8">
+    <title>Atvinnuumsóknir</title>
+    <link rel="stylesheet" href="applications.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Source+Sans+Pro" rel="stylesheet">
+</head>
+
+<main>
+<h1>Atvinnuumsóknir</h1>
+<% applications.forEach((application) => { %>
+
+    <div class="titles-answers">
+        <div class="div-info">
+            <h3><%= application.name %></h3></div>
+        <div class="div-email-phone-created">
+            <div class="div-info">
+                <a href="mailto:<%= application.email %>"><%= application.email %></a></div>
+            <div class="div-info">
+                Sími: <%= application.phone %></div>
+            <div class="div-info">
+                    Umsókn send: <%= application.created %></div>
+        </div>
+        <div class="div-info">
+            <%= application.text %></div>
+    </div>
+
+    <div class="div-processed-delete">
+        <% if(application.processed == false) { %>
+            <form method="post" action="/applications" enctype="applications/x-www-form-urlencoded">
+                <div class="processedbtn">
+                    <button id="<%= application.id %>" type="submit" class="process" value="<%= application.id %>">Vinna umsókn</button>
+                </div>
+            </form>
+        <% } else { %>
+            &#10004; Umsókn unnin <%= application.updated %>
+        <% } %>
+
+        <form method="post" action="/applications" enctype="applications/x-www-form-urlencoded">
+            <div class="deletebtn">
+                <button type="submit" class="delete">Eyða umsókn</button>
+            </div>
+        </form>
+    </div>
+
+<% }) %>
+   
+</main>
