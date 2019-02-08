@@ -69,7 +69,7 @@ form > div > div > div > label {
   flex-direction: column;
 }
 
-.div-forritari, .div-honnudur, .div-verkefnastjori {
+.div-job {
   padding: 1rem;
   display: flex;
   flex-direction: row;
@@ -95,6 +95,18 @@ input[type=phone], input[type=name], input[type=email] {
   background: #f1f1f1;
 }
 
+.inputError {
+  background: #fbb;
+}
+
+.div-job-error {
+  padding: 1rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: #fbb;
+}
+
 input[type=text]:focus, input[type=password]:focus {
   background-color: #ddd;
   outline: none;
@@ -103,11 +115,10 @@ input[type=text]:focus, input[type=password]:focus {
 /* Overwrite default styles of hr */
 hr {
   border: 1px solid #f1f1f1;
-  margin-bottom: 25px;
 }
 
 /* Set a style for the submit/register button */
-.apply {
+.apply, .umsoknir {
   padding: 0.5rem 0.5rem;
   margin: 0.5rem 0;
   cursor: pointer;
@@ -117,7 +128,7 @@ hr {
   font-family: 'Open Sans', sans-serif;
 }
 
-.apply:hover {
+.apply:hover, .umsoknir:hover {
   opacity:1;
   background-color: #bbb;
   transition-timing-function: ease-in;
@@ -127,8 +138,6 @@ hr {
 .error {
   padding: 1rem;
 }
-
-
 
 
 .applicationsbtn {

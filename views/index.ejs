@@ -13,32 +13,58 @@
                 <div class="titles-answers">
                         <div class="div-info">
                             <label for="name">Nafn</label>
-                            <input id="name" name="name" value="<%= name%>"></div>
+                            <% if (validRed.includes("name")) { %>
+                                <input id="name" name="name" class="inputError" value="<%= name%>">
+                            <% } else { %>
+                                <input id="name" name="name" value="<%= name%>">
+                            <% } %>
+                        </div>
                         <div class="div-info">
                             <label for="email">Netfang</label>
-                            <input id="email" name="email" value="<%= email%>"></div>
+                            <% if (validRed.includes("email")) { %>
+                                <input id="email" name="email" class="inputError" value="<%= email%>">
+                            <% } else { %>
+                                <input id="email" name="email" value="<%= email%>">
+                            <% } %>
+                        </div>
                         <div class="div-info">
                             <label for="phone">Sími</label>
-                            <input id="phone" name="phone" value="<%= phone%>"></div>
+                            <% if (validRed.includes("phone")) { %>
+                                <input id="phone" name="phone" class="inputError" value="<%= phone%>">
+                            <% } else { %>
+                                <input id="phone" name="phone" value="<%= phone%>">
+                            <% } %>
+                        </div>
                         <div class="div-info">
                             <label for="text">Kynning á þér:</label>
-                            <textarea rows="4" cols="30" id="text" name="text" value="<%= text%>"></textarea></div>
+                            <% if (validRed.includes("text")) { %>
+                                <textarea rows="4" cols="30" id="text" name="text" class="inputError" value="<%= text%>"></textarea>
+                            <% } else { %>
+                                <textarea rows="4" cols="30" id="text" name="text" value="<%= text%>"></textarea>
+                            <% } %>
+                        </div>
                 </div>
             </div>
-
 
             <div class="container-starf">
                 <h4>Starf sem sótt er um:</h4>
-                <div class="div-forritari">
-                    <input type="radio" name="job" value="forritari" <% if(job == 'forritari') {%> checked <%}%>><p>Forritari</p>
-                </div>
-                <div class="div-honnudur">
-                    <input type="radio" name="job" value="honnudur" <% if(job == 'honnudur') {%> checked <%}%>><p>Hönnuður</p>
-                </div>
-                <div class="div-verkefnastjori">
-                    <input type="radio" name="job" value="verkefnastjori" <% if(job == 'verkefnastjori') {%> checked <%}%>><p>Verkefnastjóri</p>
-                </div>
             </div>
+
+            <% if (validRed.includes("job")) { %>
+                <div class="div-job-error">
+                        <input type="radio" name="job" value="forritari" <% if(job == 'forritari') {%> checked <%}%>><p>Forritari</p></div>
+                <div class="div-job-error">
+                    <input type="radio" name="job" value="honnudur" <% if(job == 'honnudur') {%> checked <%}%>><p>Hönnuður</p></div>
+                <div class="div-job-error">
+                    <input type="radio" name="job" value="verkefnastjori" <% if(job == 'verkefnastjori') {%> checked <%}%>><p>Verkefnastjóri</p></div>
+            <% } else { %>
+                <div class="div-job">
+                    <input type="radio" name="job" value="forritari" <% if(job == 'forritari') {%> checked <%}%>><p>Forritari</p></div>
+                    <div class="div-job">
+                    <input type="radio" name="job" value="honnudur" <% if(job == 'honnudur') {%> checked <%}%>><p>Hönnuður</p></div>
+                    <div class="div-job">
+                    <input type="radio" name="job" value="verkefnastjori" <% if(job == 'verkefnastjori') {%> checked <%}%>><p>Verkefnastjóri</p></div>
+            <% } %>
 
             <div class="error">
                     <% if(errors) { %>
@@ -58,9 +84,9 @@
             <hr>
         </form>
         
-        <form class="umsoknir" method="get" action="/applications">
+        <form method="get" action="/applications">
             <div class="applicationsbtn">
-                <button type="submit" class="applications">Umsóknir</button>
+                <button type="submit" class="umsoknir">Umsóknir</button>
             </div>
         </form>
     </div>

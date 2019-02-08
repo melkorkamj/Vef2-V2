@@ -1,13 +1,9 @@
 const express = require('express');
 const { check, validationResult } = require('express-validator/check');
-
 const { insert } = require('./db');
 
 const router = express.Router();
 
-function catchErrors(fn) {
-  return (req, res, next) => fn(req, res, next).catch(next);
-}
 
 const validation = [
   check('name').isLength({ min: 1 }).withMessage('Nafn má ekki vera tómt'),
@@ -19,28 +15,38 @@ const validation = [
 ];
 
 const sanitazion = [
-  //'email'.normalizeEmail(),
-  //'phone'.toInt(),
+
 ];
 
 function form(req, res) {
-    res.render('index', {
-      title: 'Atvinnuumsókn', name: '', email: '', phone: '', text: '', job: '', errors: [] });
+  res.render('index', {
+    title: 'Atvinnuumsókn', name: '', email: '', phone: '', text: '', job: '', errors: [], validRed: [],
+  });
 }
 
 async function apply(req, res) {
-  const { body: { name, email, phone, text, job } = {} } = req;
+  const {
+    body: {
+      name, email, phone, text, job,
+    } = {},
+  } = req;
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
     const errorMessages = errors.array();
-    res.render('index', { name, email, phone, text, job, errors: errorMessages });
+    const isError = [];
+    errorMessages.forEach((error) => {
+      isError.push(error.param);
+    });
+    res.render('index', {
+      name, email, phone, text, job, errors: errorMessages, validRed: isError,
+    });
   } else {
     try {
       await insert(name, email, phone, text, job, 'false');
-    } catch (errors) {
-      console.log('Gat ekki búið til umsókn', name, email, phone, text, job, errors);
-      throw errors;
+    } catch (err) {
+      res.render('error');
+      throw err;
     }
     res.render('thanks');
   }
